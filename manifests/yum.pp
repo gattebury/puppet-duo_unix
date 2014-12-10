@@ -10,22 +10,24 @@ class duo_unix::yum {
   $repo_uri = 'http://pkg.duosecurity.com'
   $package_state = $::duo_unix::package_version
 
-  # Map Amazon Linux to RedHat equivalent releases
-  if $::operatingsystem == 'Amazon' {
-    $releasever = $::operatingsystemmajrelease ? {
-      '2014'  => '6Server',
-      default => undef,
+  case $::operatingsystem {
+    # Map Amazon Linux to RedHat equivalent releases
+    'Amazon': {
+      $repo_os = $::operatingsystem
+      $releasever = $::operatingsystemmajrelease ? {
+        '2014'  => '6Server',
+        default => undef,
+      }
     }
-  } else {
-    $releasever = '$releasever'
-  }
-
-  # Map Scientific Linux to CentOS
-  if $::operatingsystem == 'Scientific' {
-    $repo_os = 'CentOS'
-    $releasever = $::operatingsystemmajrelease
-  } else {
-    $repo_os = $::operatingsystem
+    # Map Scientific Linux to CentOS and fix releasever
+    'Scientific': {
+      $repo_os = 'CentOS'
+      $releasever = $::operatingsystemmajrelease
+    }
+    default: {
+      $repo_os = $::operatingsystem
+      $releasever = '$releasever'
+    }
   }
 
   yumrepo { 'duosecurity':
