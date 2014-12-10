@@ -20,6 +20,11 @@ class duo_unix::yum {
     $releasever = '$releasever'
   }
 
+  # Map Scientific Linux to CentOS
+  if $::operatingsystem == 'Scientific' {
+    $operatingsystem = 'CentOS',
+  }
+
   yumrepo { 'duosecurity':
     descr    => 'Duo Security Repository',
     baseurl  => "${repo_uri}/${::operatingsystem}/${releasever}/\$basearch",
