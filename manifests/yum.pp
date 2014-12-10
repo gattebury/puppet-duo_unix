@@ -23,6 +23,7 @@ class duo_unix::yum {
   # Map Scientific Linux to CentOS
   if $::operatingsystem == 'Scientific' {
     $repo_os = 'CentOS'
+    $releasever = $::operatingsystemmajrelease
   } else {
     $repo_os = $::operatingsystem
   }
