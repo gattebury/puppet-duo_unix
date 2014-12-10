@@ -22,12 +22,14 @@ class duo_unix::yum {
 
   # Map Scientific Linux to CentOS
   if $::operatingsystem == 'Scientific' {
-    $operatingsystem = 'CentOS',
+    $repo_os = 'CentOS'
+  } else {
+    $repo_os = $::operatingsystem
   }
 
   yumrepo { 'duosecurity':
     descr    => 'Duo Security Repository',
-    baseurl  => "${repo_uri}/${::operatingsystem}/${releasever}/\$basearch",
+    baseurl  => "${repo_uri}/${repo_os}/${releasever}/\$basearch",
     gpgcheck => '1',
     enabled  => '1',
     require  => File['/etc/pki/rpm-gpg/RPM-GPG-KEY-DUO'];
