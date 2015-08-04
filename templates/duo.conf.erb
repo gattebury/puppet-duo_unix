@@ -1,42 +1,42 @@
 [duo]
 ; Duo integration key
-ikey=<%= @ikey %>
+ikey=<%= scope.lookupvar('duo_unix::ikey') %>
 
 ; Duo secret key
-skey=<%= @skey %>
+skey=<%= scope.lookupvar('duo_unix::skey') %>
 
 ; Duo API host
-host=<%= @host %>
+host=<%= scope.lookupvar('duo_unix::host') %>
 
 ; Fallback local IP
-fallback_local_ip=<%= @fallback_local_ip %>
+fallback_local_ip=<%= scope.lookupvar('duo_unix::fallback_local_ip') %>
 
 ; Failure mode
-failmode=<%= @failmode %>
+failmode=<%= scope.lookupvar('duo_unix::failmode') %>
 
 ; Push info
-pushinfo=<%= @pushinfo %>
+pushinfo=<%= scope.lookupvar('duo_unix::pushinfo') %>
 
 ; Auto push
-autopush=<%= @autopush %>
+autopush=<%= scope.lookupvar('duo_unix::autopush') %>
 
 ; Prompts
-prompts=<%= @prompts %>
+prompts=<%= scope.lookupvar('duo_unix::prompts') %>
 
 ; Accept environment factor
-accept_env_factor=<%= @accept_env_factor %>
-<% if @usage == 'login' -%>
+accept_env_factor=<%= scope.lookupvar('duo_unix::accept_env_factor') %>
+<% if scope.lookupvar('duo_unix::usage') == 'login' -%>
 
 ; MOTD display
-motd=<%= @motd %>
+motd=<%= scope.lookupvar('duo_unix::motd') %>
 <% end -%>
-<% if @group != '' -%>
+<% if scope.lookupvar('duo_unix::group') != '' -%>
 
 ; Group restriction
-group=<%= @group %>
+group=<%= scope.lookupvar('duo_unix::group') %>
 <% end -%>
-<% if @http_proxy != '' -%>
+<% if scope.lookupvar('duo_unix::http_proxy') != '' -%>
 
 ; HTTP proxy
-http_proxy=<%= @http_proxy %>
+http_proxy=<%= scope.lookupvar('duo_unix::http_proxy') %>
 <% end -%>
