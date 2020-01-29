@@ -8,6 +8,9 @@
 #
 class duo_unix::yum (
   $repo_uri = 'http://pkg.duosecurity.com',
+  $repo_mirror = false,
+  $repo_mirror_baseurl = '',
+  $repo_mirror_gpgkey = '',
   ) {
   $package_state = $::duo_unix::package_version
 
@@ -31,12 +34,22 @@ class duo_unix::yum (
     }
   }
 
-  yumrepo { 'duosecurity':
-    descr    => 'Duo Security Repository',
-    baseurl  => "${repo_uri}/${repo_os}/${releasever}/\$basearch",
-    gpgcheck => '1',
-    gpgkey   => 'https://duo.com/DUO-GPG-PUBLIC-KEY.asc',
-    enabled  => '1',
+  if $repo_mirror {
+    yumrepo { 'duosecurity':
+      descr    => 'Duo Security Repository',
+      baseurl  => $repo_mirror_baseurl,
+      gpgcheck => '1',
+      gpgkey   => $repo_mirror_gpgkey,
+      enabled  => '1',
+    }
+  } else {
+    yumrepo { 'duosecurity':
+      descr    => 'Duo Security Repository',
+      baseurl  => "${repo_uri}/${repo_os}/${releasever}/\$basearch",
+      gpgcheck => '1',
+      gpgkey   => 'https://duo.com/DUO-GPG-PUBLIC-KEY.asc',
+      enabled  => '1',
+    }
   }
 
   if $duo_unix::manage_ssh {
