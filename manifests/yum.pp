@@ -28,6 +28,16 @@ class duo_unix::yum (
       $repo_os = 'CentOS'
       $releasever = $::operatingsystemmajrelease
     }
+    # Map AlmaLinux to RedHat and fix releasever
+    'AlmaLinux': {
+      $repo_os = 'RedHat'
+      $releasever = $::operatingsystemmajrelease
+    }
+    # Map Rocky Linux to RedHat and fix releasever
+    'Rocky': {
+      $repo_os = 'RedHat'
+      $releasever = $::operatingsystemmajrelease
+    }
     default: {
       $repo_os = $::operatingsystem
       $releasever = '$releasever'
@@ -64,4 +74,3 @@ class duo_unix::yum (
   }
 
 }
-
